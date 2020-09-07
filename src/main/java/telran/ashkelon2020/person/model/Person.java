@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = {"id"})
 @Entity
 @Table(name = "persons")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Person {
 	@Id
 	Integer id;
