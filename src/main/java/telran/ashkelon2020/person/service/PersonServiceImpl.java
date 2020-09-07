@@ -25,15 +25,14 @@ public class PersonServiceImpl implements PersonService {
 	ModelMapper modelMapper;
 	
 	@Override
+	@Transactional
 	public boolean addPerson(PersonDto personDto) {
-		Person person = modelMapper.map(personDto, Person.class);
-		Person exist = personRepository.findById(person.getId()).orElse(null);
-		if (exist != null) {
+		if (personRepository.existsById(personDto.getId())) {
 			return false;
-		}else {
-			personRepository.save(person);
-			return true;
 		}
+		Person person = modelMapper.map(personDto, Person.class);
+		personRepository.save(person);
+		return true;
 	}
 
 	@Override
@@ -43,6 +42,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
+	@Transactional
 	public PersonDto updatePerson(Integer id, NameDto nameDto) {
 		Person person = personRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 		person.setName(nameDto.getName());
@@ -51,6 +51,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
+	@Transactional
 	public PersonDto deletePerson(Integer id) {
 		Person person = personRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 		personRepository.delete(person);
@@ -58,7 +59,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Iterable<PersonDto> findAllByName(String name) {
 		return personRepository.findByName(name)
 					.map(p -> modelMapper.map(p, PersonDto.class))
@@ -66,8 +67,10 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	@Transactional
-	public Iterable<PersonDto> findAllByAge(LocalDate dateFrom, LocalDate dateTo) {
+	@Transactional(readOnly = true)
+	public Iterable<PersonDto> findAllByAge(int from, int to) {
+		LocalDate dateTo = LocalDate.now().minusYears(from);
+		LocalDate dateFrom = LocalDate.now().minusYears(to);
 		return personRepository.findByBirthDateBetween(dateFrom, dateTo)
 				.map(p -> modelMapper.map(p, PersonDto.class))
 				.collect(Collectors.toList());

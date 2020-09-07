@@ -49,6 +49,6 @@ public class PersonController {
 	
 	@GetMapping("/persons/date/period")
 	public Iterable<PersonDto> findAllByAge(@RequestBody PeriodDto periodDto){
-		return personService.findAllByAge(periodDto.getDateFrom(), periodDto.getDateTo());
+		return personService.findAllByAge(periodDto.getFrom(), periodDto.getTo());
 	}
 }

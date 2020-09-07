@@ -1,7 +1,5 @@
 package telran.ashkelon2020.person.service;
 
-import java.time.LocalDate;
-
 import telran.ashkelon2020.person.dto.NameDto;
 import telran.ashkelon2020.person.dto.PersonDto;
 
@@ -17,5 +15,5 @@ public interface PersonService {
 	
 	Iterable<PersonDto> findAllByName(String name);
 	
-	Iterable<PersonDto> findAllByAge(LocalDate dateFrom, LocalDate dateTo);
+	Iterable<PersonDto> findAllByAge(int from, int to);
 }
