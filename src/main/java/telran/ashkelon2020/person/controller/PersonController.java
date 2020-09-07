@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import telran.ashkelon2020.person.dto.CityPopulationDto;
 import telran.ashkelon2020.person.dto.NameDto;
 import telran.ashkelon2020.person.dto.PeriodDto;
 import telran.ashkelon2020.person.dto.PersonDto;
@@ -50,5 +51,15 @@ public class PersonController {
 	@GetMapping("/persons/date/period")
 	public Iterable<PersonDto> findAllByAge(@RequestBody PeriodDto periodDto){
 		return personService.findAllByAge(periodDto.getFrom(), periodDto.getTo());
+	}
+	
+	@GetMapping("/persons/city/{city}")
+	public Iterable<PersonDto> findAllByCity(@PathVariable String city) {
+		return personService.findAllByCity(city);
+	}
+	
+	@GetMapping("/population/city")
+	public Iterable<CityPopulationDto> getCityPopulation() {
+		return personService.getCityPopulation();
 	}
 }

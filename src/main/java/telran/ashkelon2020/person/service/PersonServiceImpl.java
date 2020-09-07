@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import telran.ashkelon2020.person.dto.CityPopulationDto;
 import telran.ashkelon2020.person.dto.NameDto;
 import telran.ashkelon2020.person.dto.PersonDto;
 import telran.ashkelon2020.person.exceptions.UserNotFoundException;
@@ -74,6 +75,19 @@ public class PersonServiceImpl implements PersonService {
 		return personRepository.findByBirthDateBetween(dateFrom, dateTo)
 				.map(p -> modelMapper.map(p, PersonDto.class))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<PersonDto> findAllByCity(String city) {
+		return personRepository.findByAddressCity(city)
+				.map(p -> modelMapper.map(p, PersonDto.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public Iterable<CityPopulationDto> getCityPopulation() {
+		return personRepository.getCityPopulation();
 	}
 
 }

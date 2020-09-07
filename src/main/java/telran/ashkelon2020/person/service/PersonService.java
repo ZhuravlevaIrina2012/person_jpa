@@ -1,5 +1,6 @@
 package telran.ashkelon2020.person.service;
 
+import telran.ashkelon2020.person.dto.CityPopulationDto;
 import telran.ashkelon2020.person.dto.NameDto;
 import telran.ashkelon2020.person.dto.PersonDto;
 
@@ -16,4 +17,8 @@ public interface PersonService {
 	Iterable<PersonDto> findAllByName(String name);
 	
 	Iterable<PersonDto> findAllByAge(int from, int to);
+	
+	Iterable<PersonDto> findAllByCity(String city);
+	
+	Iterable<CityPopulationDto> getCityPopulation();
 }

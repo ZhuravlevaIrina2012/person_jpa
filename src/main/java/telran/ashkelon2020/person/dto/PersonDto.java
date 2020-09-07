@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import telran.ashkelon2020.person.model.Address;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +19,5 @@ public class PersonDto {
 	String name;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	LocalDate birthDate;
+	Address address;
 }
